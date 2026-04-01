@@ -1,3 +1,10 @@
+# WHC Tech blog
+
+This is a tech blog for the Webhosting.coop, this is a fork of:
+
+[Tailwind NextJS starter blog](https://github.com/timlrx/tailwind-nextjs-starter-blog/wiki) and do a search on past issues. Feel free to open a new issue if none has been posted previously.
+
+
 ![tailwind-nextjs-banner](/public/static/images/twitter-card.png)
 
 # Tailwind Nextjs Starter Blog
