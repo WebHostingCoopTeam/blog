@@ -1,7 +1,7 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
   title: 'Webhosting.coop Tech Blog',
-  author: 'Josh Cox',
+  author: 'WebHostingCoopTeam',
   headerTitle: 'WHCtechBlog',
   description: 'A blog about tech at the WHC',
   language: 'en-us',
