@@ -1,0 +1,22 @@
+# syntax=docker/dockerfile:1
+
+# Builder stage – install dependencies and build the app (optional for dev)
+#FROM node:22-alpine AS base
+FROM node:22-trixie AS base
+RUN npm uninstall -g yarn \
+&& corepack enable \
+&& corepack prepare yarn@3.6.1 --activate
+
+# Set working directory inside the container
+WORKDIR /app
+
+# Expose the default Next.js development port
+EXPOSE 3000
+
+# Run the development server
+#CMD ["yarn", "&&", "yarn", "dev"]
+#RUN apk add bash
+RUN apt-get update && apt-get install -yqq bash
+#CMD ["/bin/bash"]
+ENV PWD=/app
+CMD ["yarn", "dev"]
