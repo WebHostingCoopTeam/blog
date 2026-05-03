@@ -7,10 +7,10 @@ export PNPM_HOME=/home/thoth/.local/share/pnpm
 : ${BLOG_PATH:=$HOME}
 set -eux
 nvm install lts/jod
-npm i -g pnpm
+npm i -g yarn
 #cloner https://github.com/WebHostingCoopTeam/blog.git
 #cd blog/main
 git clone https://github.com/WebHostingCoopTeam/blog.git
 cd blog
-pnpm i
-pnpm run dev
+yarn install
+yarn dev
