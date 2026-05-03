@@ -1,5 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -l
 : ${BLOG_PATH:=$HOME}
+set -eux
 nvm install lts/jod
 npm i -g pnpm
 cloner https://github.com/WebHostingCoopTeam/blog.git
