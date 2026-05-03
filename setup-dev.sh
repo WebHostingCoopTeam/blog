@@ -8,7 +8,9 @@ export PNPM_HOME=/home/thoth/.local/share/pnpm
 set -eux
 nvm install lts/jod
 npm i -g pnpm
-cloner https://github.com/WebHostingCoopTeam/blog.git
-cd blog/main
+#cloner https://github.com/WebHostingCoopTeam/blog.git
+#cd blog/main
+git clone https://github.com/WebHostingCoopTeam/blog.git
+cd blog
 pnpm i
 pnpm run dev
