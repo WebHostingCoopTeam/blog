@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -l
+#!/usr/bin/env -vS bash -l
 : ${BLOG_PATH:=$HOME}
 set -eux
 nvm install lts/jod
