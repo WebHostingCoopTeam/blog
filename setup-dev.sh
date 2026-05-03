@@ -10,6 +10,7 @@ nvm install lts/jod
 npm i -g yarn
 #cloner https://github.com/WebHostingCoopTeam/blog.git
 #cd blog/main
+cd ${BLOG_PATH}
 git clone https://github.com/WebHostingCoopTeam/blog.git
 cd blog
 yarn install
