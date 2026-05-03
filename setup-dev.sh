@@ -1,5 +1,5 @@
 #!/usr/bin/env -vS bash -l
-export NVM_DIR="/home/thoth/.nvm"
+export NVM_DIR="${HOME}/.nvm"
 export PNPM_HOME=/home/thoth/.local/share/pnpm
 #export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
