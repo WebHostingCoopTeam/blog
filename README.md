@@ -4,6 +4,39 @@ This is a tech blog for the Webhosting.coop, this is a fork of:
 
 [Tailwind NextJS starter blog](https://github.com/timlrx/tailwind-nextjs-starter-blog/wiki) and do a search on past issues. Feel free to open a new issue if none has been posted previously.
 
+## Docker
+
+### build
+
+```
+docker build -t=whcblog.dev . -f ./docker/Dockerfile.dev
+```
+
+### run
+
+Run the container mounting in your current directory as /app:
+
+```
+docker run -it -p 0.0.0.0:3000:3000 -v $(pwd):/app whcblog.dev
+```
+
+example output:
+
+```
+docker run -it -p 0.0.0.0:3000:3000 -v $(pwd):/app whcblog.dev
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3000
+   - Network:      http://172.17.0.3:3000
+
+ ✓ Starting...
+Contentlayer config change detected. Updating type definitions and data...
+(node:50) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+successCallback /app/.contentlayer
+Local search index generated...
+Generated 19 documents in .contentlayer
+ ✓ Ready in 6.6s
+```
 
 ![tailwind-nextjs-banner](/public/static/images/twitter-card.png)
 
@@ -349,3 +382,4 @@ Using the template? Support this effort by giving a star on GitHub, sharing your
 ## Licence
 
 [MIT](https://github.com/timlrx/tailwind-nextjs-starter-blog/blob/main/LICENSE) © [Timothy Lin](https://www.timlrx.com)
+
