@@ -1,0 +1,82 @@
+---
+title:  Headscale UI Shootout
+date: '2026-07-19'
+tags: ['multi-author', 'headscale', 'shootout']
+draft: false
+summary: 'Comparing headscale UI frontends'
+authors: ['default', 'joshcox']
+---
+
+### Headscale UIs
+
+
+The web frontends listed on the [Headscale Web UI integration page](https://headscale.net/stable/ref/integration/web-ui/) vary significantly in their architecture, feature sets, and target environments. Because Headscale does not ship with a built-in graphical interface, the community has built alternative options ranging from simple static dashboards to complex web clones of the official Tailscale dashboard.
+## Overview of Featured Web Frontends
+
+| Frontend Name | Backend Requirements | Distinctive Focus | Primary Audience | Forks | Stars | Link |
+|---|---|---|---|---|---|---|
+| Headplane | Next.js Backend Node | Feature-complete replica of official Tailscale. | Advanced users needing full control (ACLs, DNS, OIDC). | 215 | 2739 | [github.com/tale/headplane](https://github.com/tale/headplane) |
+| headscale-ui | None (Static site / Client-side) | Basic, straightforward administration. | Users looking for a lightweight, minimal setup. | 194 | 2682 | [github.com/gurucomputing/headscale-ui](https://github.com/gurucomputing/headscale-ui) |
+| headscale-admin | None (Stateless / Client-side) | Visual, interactive ACL configuration builder. | Users managing security policies without writing raw JSON. | 96 | 1097 | [https://github.com/GoodiesHQ/headscale-admin](https://github.com/GoodiesHQ/headscale-admin) |
+| headscale-ui | None (Static site / Client-side) | Completely serverless execution. | Administrators prioritizing zero-backend overhead. | 27 | 225 | [github.com/simcu/headscale-ui](https://github.com/simcu/headscale-ui) |
+| rickli-cloud/headscale-console | Docker Exec / API Mode | Headscale Console is essentially a Tailscale client packaged as a web application. | Those who want a browser-based remote access powered by a WebAssembly Tailscale client | 8 | 97 | [https://github.com/rickli-cloud/headscale-console/tree/main](https://github.com/rickli-cloud/headscale-console/tree/main) | 
+| ouroboros | Node / Go Backend | Decentralized, user-centric device ownership. | Environments where end-users manage their own nodes. | 4 | 41 | [https://github.com/yellowsink/ouroboros](https://github.com/yellowsink/ouroboros) |
+| headscale-ui | NodeJS | A Bun-powered Headscale web UI with profile management, multilingual support, and a friendly Vue control panel. | Headscale UI is built around the daily admin workflow: save multiple server profiles, connect to a Headscale instance, review machines and users, create auth keys, approve routes, and design access policy through guided controls. | 4 | 17 | [https://github.com/MunMunMiao/headscale-ui](https://github.com/MunMunMiao/headscale-ui) | 
+| headscalemanager | C / Dart | Bienvenue dans le guide d'utilisation de l'application Headscale Manager! | French speakers | 2 | 4 | [https://github.com/hkdone/headscalemanager](https://github.com/hkdone/headscalemanager) |
+| HeadControl | Go | Minimal Headscale admin dashboard, built with Go and HTMX. |  Go and HTMX as the foundation because I needed something truly lightweight and fast no heavy JavaScript frameworks, no complex build pipelines, just a single binary that serves everything. | 1 | 4 | [https://github.com/ahmadzip/HeadControl](https://github.com/ahmadzip/HeadControl) | 
+| headscale-ui | None (Static site / Client-side) | Basic, straightforward administration. | Users looking for a lightweight, minimal setup. | 0 | 12 | [github.com](https://github.com/Arispex/headscale-ui) |
+| headscale-piying | NodeJS |  Implements a visual ACL configuration interface with auto-suggestion support. | Simple ACL manager | 0 | 7 | [https://github.com/wszgrcy/headscale-piying](https://github.com/wszgrcy/headscale-piying) | 
+| unraid-headscale-admin | Docker Exec / API Mode | Deep native integration with Unraid. | Unraid server owners hosting Headscale in Docker. | 0 | 5 | [https://github.com/ich777/unraid-headscale-admin](https://github.com/ich777/unraid-headscale-admin) |
+
+------------------------------
+## Key Architectural & Feature Differences## 1. headscale-ui (by GuruComputing)
+
+* How it works: It is released as a completely static site that runs entirely in your web browser. You must generate an API key on your Headscale server and input it into the web interface. [headscale API](https://headscale.net/stable/ref/api/) [https://blog.gurucomputing.com.au](https://blog.gurucomputing.com.au/Smart%20VPNS%20with%20Headscale/Configuring%20the%20Headscale%20UI/) [https://github.com](https://github.com/gurucomputing/headscale-ui/blob/master/README.md)
+
+* Deployment note: It expects to be served from a /web path. Because of browser security constraints (CORS), you usually need to deploy it behind a reverse proxy like [Caddy](https://headscale.net/stable/ref/integration/reverse-proxy/) on the same subdomain as Headscale. [reverse-proxy notes](https://headscale.net/stable/ref/integration/reverse-proxy/)
+
+## 2. HeadscaleUi (by Arispex)
+
+* How it works: Similar to headscale-ui, this is a fully static admin dashboard. It does not run its own persistent database or server environment. It communicates directly from your browser to your Headscale instance via the REST API. [3, 7, 8, 9, 10] 
+
+## 3. Headplane
+
+* How it works: This is currently one of the most mature and "feature-complete" modern choices. Unlike the static alternatives, [Headplane](https://headplane.net/introduction) includes a server component capable of reading and safely modifying your server’s config.yaml file. [https://thinkinggeek.stewartclan.ca](https://thinkinggeek.stewartclan.ca/a-ui-for-headscale-headplane-setup/) [https://github.com](https://github.com/tale/headplane) [https://www.reddit.com](https://www.reddit.com/r/headscale/comments/1l33mik/why_there_is_no_single_working_version_of/)
+* Advanced capabilities: It closely mimics the official Tailscale web dashboard experience. It supports advanced management functions including [OpenID Connect (OIDC)](http://headscale.net/0.26.0/about/features/) provider configuration, global DNS setting adjustments, complex node route approvals, and Access Control List (ACL) syncs. [https://www.youtube.com](https://www.youtube.com/watch?v=r-qn6DrJ6IA&t=22)
+
+## 4. headscale-admin
+
+* How it works: Built specifically to eliminate command-line friction, [headscale-admin](https://github.com/GoodiesHQ/headscale-admin) is completely stateless and stores your API key locally in the browser. [14] [https://github.com](https://github.com/GoodiesHQ/headscale-admin)
+* Advanced capabilities: Its standout feature is an interactive, visual ACL Builder. It allows you to build out network segregation and node access policies through a graphical point-and-click interface rather than text editing JSON/HUJSON files manually. 
+
+## 5. ouroboros
+
+* How it works: Ouroboros flips the traditional management model. Instead of being a broad control plane built exclusively for network administrators, it is designed for a multi-user environment where individual end-users login to add, expire, or view their own connected hardware devices.
+
+## 6. unraid-headscale-admin
+
+* How it works: This is a specialized utility tailor-made for the Unraid server platform. It gives users the flexibility to toggle between an API Mode and a direct Local Mode. Local mode can trigger configuration changes straight through local container execution commands (docker exec) without relying on an external network API key exposure.
+
+------------------------------
+
+
+
+If you are looking for a multi-user login system, you have two main routes depending on what you want your users to achieve when they log into the interface. [https://learn.helcim.com](https://learn.helcim.com/docs/configure-pos-app-login-settings)
+Because Headscale itself delegates multi-user authentication to OpenID Connect (OIDC) (using identity providers like Keycloak, Authelia, Google, or Authentik), the frontends on that page approach "multi-user login" in two very distinct ways: [https://www.authelia.com](https://www.authelia.com/integration/openid-connect/clients/headscale/) [https://dev.to](https://dev.to/selfhostingsh/headscale-vs-tailscale-self-hosted-control-plane-1h1f)
+## 1. Headplane (Best for Admins & Self-Service Users)
+If you want a unified experience where you log in as an administrator, but your end-users can also log in to view and manage their own specific machines, [Headplane](https://github.com/tale/headplane) is the premier choice. [https://headplane.net](https://headplane.net/features/sso) [https://github.com](https://github.com/tale/headplane)
+
+* How Login Works: It natively supports Single Sign-On (SSO) via OIDC.
+* Role-Based Permissions: Headplane features Role-Based Access Control (RBAC). An Identity Provider administrator can log in to manage the global tailnet, ACLs, and DNS settings. Meanwhile, a regular user logging in via SSO can only see, rename, or generate pre-authenticated keys for their own assigned devices. [github issue 18](https://github.com/tale/headplane/issues/18)
+* The Catch: It requires you to have an OIDC provider already running on your network (like Authentik or Authelia) so it can handle the user database and token issuance. [https://headscale.net](http://headscale.net/0.26.0/ref/oidc/)
+
+## 2. Ouroboros (Best for Multi-User Device Onboarding)
+If your primary goal is to let individual users add their own devices without bothering you (the server admin) to manually run commands, [Ouroboros](https://github.com/yellowsink/ouroboros) was custom-built for this exact scenario.
+* How Login Works: It explicitly mandates user authentication before any action can be taken, using a GitHub OAuth/OIDC login system.
+* The Focus: It is explicitly designed for a multi-user environment where users authenticate, register their hardware interactively, and manage their personal node states without gaining access to global server configuration or other users' nodes. [https://auth0.com](https://auth0.com/blog/enhancing-productivity-with-identity-and-access-management/)
+
+## 3. Client-Side Options (Headscale-UI, Headscale-Admin)
+The purely static, client-side frontends on that page—such as [headscale-admin](https://github.com/GoodiesHQ/headscale-admin) and headscale-ui—do not have built-in multi-user login systems.
+
+* They are designed for a single administrator who pastes in a master API token.
+* If you want multiple administrators to use them securely, you must put the frontend behind an authenticating reverse proxy (such as Nginx Proxy Manager + Authelia or Cloudflare Access) to restrict who can open the web page in the first place. [https://www.reddit.com](https://www.reddit.com/r/selfhosted/comments/1ic1w4q/headscale_setup_with_headscaleadmin_frontend_and/) [https://www.token2.com](https://www.token2.com/site/page/using-token2-hardware-tokens-for-authelia-iam)
